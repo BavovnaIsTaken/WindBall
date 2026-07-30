@@ -281,9 +281,10 @@
     tctx.restore();
   }
 
+  // Прев'ю фігур (renderTilePreview) рендериться в game.js, ПІСЛЯ завантаження
+  // renderer.js — сама функція викликає renderBlockShape/drawConfettiPiece,
+  // яких тут ще немає в момент виконання цього файлу (див. порядок <script> у index.html).
   document.querySelectorAll('.tile').forEach(function(btn){
     btn.addEventListener('click', function(){ spawnBlock(btn.dataset.kind); });
-    const canvasEl = btn.querySelector('.tilePreview');
-    if(canvasEl) renderTilePreview(canvasEl, btn.dataset.kind);
   });
 
