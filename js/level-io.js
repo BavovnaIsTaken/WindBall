@@ -109,6 +109,18 @@
     const bry = def.ballRy!=null ? def.ballRy : 0.43;
     resetBall(PLAY_W*brx, H*bry);
 
+    // Фіксовані кольорові кульки (на відміну від spawnExtraBall, який ставить
+    // їх у випадкове місце) — потрібні, щоб рівень відтворювався однаково щоразу.
+    extraBalls = [];
+    if(def.extraBalls && def.extraBalls.length){
+      def.extraBalls.forEach(function(eb){
+        extraBalls.push({
+          x: eb.rx*PLAY_W, y: eb.ry*H, vx:0, vy:0, rot:0,
+          color: eb.color || EXTRA_BALL_COLORS[extraBalls.length % EXTRA_BALL_COLORS.length]
+        });
+      });
+    }
+
     if(def.bgTiles && def.bgTiles.length){
       const map = {};
       def.bgTiles.forEach(function(t){ map[t.gx+'_'+t.gy] = t; });
@@ -161,6 +173,37 @@
   };
   document.getElementById('level3Btn').addEventListener('click', function(){
     loadLevel(LEVEL_3);
+    currentLoadedLevelIndex = null;
+  });
+
+  // Рівень №4: 3 труби вздовж правого краю/низу + ціль по центру-низу +
+  // 12 фіксованих кольорових кульок. Координати й тип труб — приблизна оцінка
+  // зі скріншота геймплею (більярд-режим з розставленими трубами), розмір
+  // довгої труби підігнано через sizeMulW, бо на фото вона довша за дефолтну.
+  const LEVEL_4 = {
+    ring: { rx: 0.485, ry: 0.751 },
+    ballRx: 0.278, ballRy: 0.134,
+    blocks: [
+      { kind:'pipeElbow',    rx:0.911, ry:0.103, rot:Math.PI*0.7 },
+      { kind:'pipeStraight', rx:0.915, ry:0.423, rot:Math.PI/2, sizeMulW:5 },
+      { kind:'pipeStraight', rx:0.759, ry:0.873, rot:0, sizeMulW:3 }
+    ],
+    extraBalls: [
+      { rx:0.426, ry:0.122, color:'#ff8fd1' },
+      { rx:0.185, ry:0.209, color:'#ff9f43' },
+      { rx:0.468, ry:0.265, color:'#4fe0a8' },
+      { rx:0.734, ry:0.258, color:'#5ce1e6' },
+      { rx:0.194, ry:0.397, color:'#5ce1e6' },
+      { rx:0.649, ry:0.397, color:'#8a5cff' },
+      { rx:0.430, ry:0.493, color:'#8a5cff' },
+      { rx:0.207, ry:0.599, color:'#5ce1e6' },
+      { rx:0.679, ry:0.601, color:'#ff8fd1' },
+      { rx:0.700, ry:0.690, color:'#4fe0a8' },
+      { rx:0.257, ry:0.709, color:'#8a5cff' }
+    ]
+  };
+  document.getElementById('level4Btn').addEventListener('click', function(){
+    loadLevel(LEVEL_4);
     currentLoadedLevelIndex = null;
   });
 
