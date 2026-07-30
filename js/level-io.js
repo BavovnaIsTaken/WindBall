@@ -143,6 +143,27 @@
     currentLoadedLevelIndex = null;
   });
 
+  // Рівень №3: кластер з 7 вентиляторів (spinner4) угорі зліва-по-центру,
+  // ціль (ring) нижче праворуч по центру. Координати приблизні — зняті зі
+  // скріншота геймплею (кластер щільно збитих пропелерів + м'яч над ним).
+  const LEVEL_3 = {
+    ring: { rx: 0.62, ry: 0.505 },
+    ballRx: 0.434, ballRy: 0.126,
+    blocks: [
+      { kind:'spinner4', rx:0.291, ry:0.145, rot:0 },
+      { kind:'spinner4', rx:0.459, ry:0.139, rot:0 },
+      { kind:'spinner4', rx:0.211, ry:0.192, rot:0 },
+      { kind:'spinner4', rx:0.379, ry:0.201, rot:0 },
+      { kind:'spinner4', rx:0.506, ry:0.214, rot:0 },
+      { kind:'spinner4', rx:0.253, ry:0.254, rot:0 },
+      { kind:'spinner4', rx:0.388, ry:0.271, rot:0 }
+    ]
+  };
+  document.getElementById('level3Btn').addEventListener('click', function(){
+    loadLevel(LEVEL_3);
+    currentLoadedLevelIndex = null;
+  });
+
   // ---------- custom (player-saved) levels ----------
   let customLevels = [];
   let currentLoadedLevelIndex = null; // index into customLevels, or null if none / a built-in level is active
